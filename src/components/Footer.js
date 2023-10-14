@@ -72,7 +72,7 @@ const Footer = () => {
               <p className="text-gray-400 text-sm">
                 Subscribe to our newsletter for updates:
               </p>
-              <div className="mt-2 flex items-center flex">
+              <div className="mt-2 items-center">
                 <input
                   type="email"
                   placeholder="Your email"
