@@ -1,21 +1,13 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Landing from "./components/Landing";
-import Footer from "./components/Footer";
-import HomePage from "./components/HomePage";
-import Profile from "./components/Profile";
+import React from 'react';
+import { Auth0Provider } from '@auth0/auth0-react';
+import { authConfig } from './config';
+import LandingPage from './components/LandingPage';
 
 function App() {
   return (
-    <div className="font-righteous">
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Landing/>} exact/>
-          <Route path="/homepage" element={<HomePage/>} exact/>
-          <Route path="/profile" element={<Profile/>} exact/>
-        </Routes>
-        <Footer/>
-      </BrowserRouter>
-    </div>
+    <Auth0Provider {...authConfig}>
+      <LandingPage />
+    </Auth0Provider>
   );
 }
 
