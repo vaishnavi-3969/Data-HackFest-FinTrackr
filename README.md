@@ -1,70 +1,35 @@
-# Getting Started with Create React App
+<div align='center'>
+<h1>FinTrackr</h1>
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+<div align='left'>
+<h1>Problem Statement</h1>
+<p>
+Managing personal finances is a fundamental aspect of an individual's life, and it can often become overwhelming to keep track of expenses, income, and financial goals. In a world where digital transactions and financial complexities are increasing, there's a growing need for a comprehensive and user-friendly solution that helps individuals take control of their finances, make informed financial decisions, and plan for their future effectively.
 
-## Available Scripts
+Our challenge is to create a web application that empowers users to manage their personal finances efficiently. The application should provide users with tools to:
 
-In the project directory, you can run:
+Expense Tracking: Easily record and categorize expenses, income, and transactions.
 
-### `npm start`
+Financial Overview: Offer a clear overview of the user's financial status, including account balances, spending trends, and income sources.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Budgeting: Enable users to set budgets and financial goals, providing them with real-time progress updates.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Bank Account Integration: Integrate with banking services (e.g., Plaid) to securely link and retrieve bank account information, transaction history, and balances.
 
-### `npm test`
+User Authentication: Implement secure user authentication (e.g., Auth0) to safeguard financial data.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Data Visualization: Use charts and graphs to present financial data in an easily digestible format, helping users make informed decisions.
 
-### `npm run build`
+Customization: Allow users to customize categories, labels, and financial goals to suit their unique financial situation.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Reports and Analysis: Provide users with detailed reports and analysis of their financial history and trends.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Alerts and Reminders: Implement a notification system to alert users about upcoming bills, financial milestones, or budget overruns.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+User-Friendly Interface: Ensure a user-friendly and intuitive interface that makes financial management accessible to users of all backgrounds.
 
-### `npm run eject`
+By addressing these challenges, we aim to create a personal finance tracker that empowers users to take control of their financial well-being, make informed financial decisions, and ultimately work towards achieving their financial goals. This tool should cater to both financial novices looking for basic expense tracking and advanced users in need of comprehensive financial insights.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+</p>
+</div>
+</div>
