@@ -2,7 +2,7 @@ import { initializeApp } from "firebase/app";
 import {getDatabase} from 'firebase/database';
 
 const firebaseConfig = {
-    apiKey: "AIzaSyCfS-yZL_eUBi9Ky21NG5EZ1FN5S2hnSxQ",
+    apiKey:process.env.FIREBASE_API_KEY,
     authDomain: "data-hackfest.firebaseapp.com",
     projectId: "data-hackfest",
     storageBucket: "data-hackfest.appspot.com",

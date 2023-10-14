@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useAuth0 } from '@auth0/auth0-react'; // Assuming you're using Auth0 for authentication
+import { useAuth0 } from '@auth0/auth0-react';
 import { FaUser, FaMoneyBill, FaCreditCard, FaPlusCircle } from 'react-icons/fa';
+
 
 function Homepage() {
   const [transactions, setTransactions] = useState([]);
@@ -25,14 +26,6 @@ function Homepage() {
   ];
 
   useEffect(() => {
-    // axios.get('Plaid API endpoint here')
-    //   .then((response) => {
-    //     setTransactions(response.data.transactions);
-    //   })
-    //   .catch((error) => {
-    //     console.error('Error fetching transactions:', error);
-    //   });
-
     setTransactions(fakeTransactions);
 
     //  total spent and remaining balance
@@ -60,7 +53,7 @@ function Homepage() {
   };
 
   return (
-    <div className="p-10">
+    <div className="p-4">
       <h1 className="text-3xl text-blue-500 mb-4">Personal Finance Tracker</h1>
       <p className="text-white mb-4">
         Welcome, <FaUser /> {user.name} ({user.email}), to your personal finance tracker! Keep an eye on your financial health.

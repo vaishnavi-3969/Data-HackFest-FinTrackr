@@ -25,7 +25,10 @@ const Navbar = () => {
             </div>
             {isDropdownOpen && (
               <div className="dropdown-menu absolute z-10 mt-2 p-2 bg-white text-blue-700 rounded-md shadow-md">
-              <Link to="view_profile" className="nav-link block mb-2">
+                <Link to="/" className="nav-link block mb-2">
+                  Dashboard
+                </Link>
+                <Link to="view_profile" className="nav-link block mb-2">
                   View Profile
                 </Link>
                 <Link to="profile" className="nav-link block mb-2">
