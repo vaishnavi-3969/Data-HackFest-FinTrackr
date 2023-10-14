@@ -54,7 +54,7 @@ function Homepage() {
 
   return (
     <div className="p-4">
-      <h1 className="text-3xl text-blue-500 mb-4">Personal Finance Tracker</h1>
+      <h1 className="text-3xl text-blue-500 mb-4">Personal Dashboard</h1>
       <p className="text-white mb-4">
         Welcome, <FaUser /> {user.name} ({user.email}), to your personal finance tracker! Keep an eye on your financial health.
       </p>

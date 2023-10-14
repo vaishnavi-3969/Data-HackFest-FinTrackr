@@ -14,7 +14,7 @@ const Navbar = () => {
   return (
     <nav className="bg-white shadow-md p-4 text-blue-700">
       <div className="container mx-auto flex justify-between items-center">
-        <div className="text-2xl font-bold">Personal Finance Tracker</div>
+        <div className="text-2xl font-bold">FinTrackr</div>
         {isAuthenticated ? (
           <div className="relative">
             <div className="flex items-center cursor-pointer" onClick={toggleDropdown}>
