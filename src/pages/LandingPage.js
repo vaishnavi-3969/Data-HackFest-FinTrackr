@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 import { faqs } from '../constants/faqs';
+import Logo from '../assets/Logo.jpeg';
 
 const FAQ = () => {
   const [expanded, setExpanded] = useState('');
@@ -68,13 +69,18 @@ const LandingPage = () => {
     backgroundRepeat: 'no-repeat',
     backgroundPosition: 'center',
   };
-
+  const logoStyle = {
+    maxWidth: '200px', 
+    padding:'10px'
+  };
   return (
     <div
-      className="min-h-screen flex flex-col items-center justify-center bg-gray-100 relative"
+      className="min-h-screen flex flex-col items-center justify-center bg-gray-100 relative p-3"
       style={backgroundStyle}
     >
-      <h1 className="text-6xl text-white mb-8 font-bold jetbrains-mono">Personal Finance Tracker</h1>
+       <div style={logoStyle}>
+        <img src={Logo} alt="Logo" />
+      </div>
       <div className="text-white flex flex-row items-center">
         <button
           className="bg-transparent text-xl text-white border border-white font-base py-6 px-16 rounded-lg hover:border-blue-500 hover:ring-2 ring-blue-500 hover:text-blue-500 transition duration-300 jetbrains-mono"
