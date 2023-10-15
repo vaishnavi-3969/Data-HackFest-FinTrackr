@@ -8,6 +8,10 @@ import Profile from './pages/Profile';
 import Navbar from './components/Navbar';
 import ViewProfile from './pages/ViewProfile';
 import Error from './pages/Error';
+import Visualization from './pages/Visualization';
+import TransactionHistory from './pages/TransactionHistory';
+import Cards from './pages/Cards';
+import Documents from './pages/Documents';
 
 function App() {
   const {isAuthenticated} = useAuth0();
@@ -21,6 +25,10 @@ function App() {
         <Route path="/profile" element={<Profile/>} exact/>
         <Route path="/view_profile" element={<ViewProfile/>} exact/>
         <Route path='*' element={<Error/>} exact/>
+        <Route path="/visualizations" element={<Visualization/>} exact/>
+        <Route path='/transactions' element={<TransactionHistory/>} exact/>
+        <Route path='/cards' element={<Cards/>} exact/>
+        <Route path='/documents' element={<Documents/>} exact/>
       </Routes>
      <Footer/>
     </BrowserRouter>
