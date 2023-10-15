@@ -70,7 +70,7 @@ const LandingPage = () => {
     backgroundPosition: 'center',
   };
   const logoStyle = {
-    maxWidth: '200px', 
+    maxWidth: '200px',
     padding:'10px'
   };
   return (
@@ -81,6 +81,7 @@ const LandingPage = () => {
        <div style={logoStyle}>
         <img src={Logo} alt="Logo" />
       </div>
+      <h1 className="text-6xl text-white mb-8 font-bold">Personal Finance Tracker</h1>
       <div className="text-white flex flex-row items-center">
         <button
           className="bg-transparent text-xl text-white border border-white font-base py-6 px-16 rounded-lg hover:border-blue-500 hover:ring-2 ring-blue-500 hover:text-blue-500 transition duration-300 jetbrains-mono"
