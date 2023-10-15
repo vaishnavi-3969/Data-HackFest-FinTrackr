@@ -9,30 +9,28 @@ import Navbar from './components/Navbar';
 import ViewProfile from './pages/ViewProfile';
 import Error from './pages/Error';
 import TransactionHistory from './pages/TransactionHistory';
-import Cards from './pages/Cards';
 import Documents from './pages/Documents';
 import Visualization from './pages/Visualization';
 
 function App() {
-  const {isAuthenticated} = useAuth0();
+  const { isAuthenticated } = useAuth0();
 
   return (
     <div className="font-righteous antialiased  text-slate-400 bg-slate-900">
-    <BrowserRouter>
-    {isAuthenticated ? <Navbar/> : null}
-      <Routes>
-        <Route path="/" element={isAuthenticated ? <Homepage/> : <LandingPage/>} exact/>
-        <Route path="/profile" element={<Profile/>} exact/>
-        <Route path="/view_profile" element={<ViewProfile/>} exact/>
-        <Route path='*' element={<Error/>} exact/>
-        <Route path="/visualizations" element={<Visualization/>} exact/>
-        <Route path='/transactions' element={<TransactionHistory/>} exact/>
-        <Route path='/cards' element={<Cards/>} exact/>
-        <Route path='/documents' element={<Documents/>} exact/>
-      </Routes>
-     <Footer/>
-    </BrowserRouter>
-  </div>
+      <BrowserRouter>
+        {isAuthenticated ? <Navbar /> : null}
+        <Routes>
+          <Route path="/" element={isAuthenticated ? <Homepage /> : <LandingPage />} exact />
+          <Route path="/profile" element={<Profile />} exact />
+          <Route path="/view_profile" element={<ViewProfile />} exact />
+          <Route path='*' element={<Error />} exact />
+          <Route path="/visualizations" element={<Visualization />} exact />
+          <Route path='/transactions' element={<TransactionHistory />} exact />
+          <Route path='/documents' element={<Documents />} exact />
+        </Routes>
+        <Footer />
+      </BrowserRouter>
+    </div>
   );
 }
 

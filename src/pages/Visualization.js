@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { PieChart, Pie, BarChart, Bar, LineChart, Line, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer, AreaChart, Area } from 'recharts';
+import Cards from './Cards';
 
 const Visualization = () => {
     const [chartType, setChartType] = useState('pie');
@@ -40,7 +41,7 @@ const Visualization = () => {
     ];
 
     const renderChart = (chartType) => {
-        
+
         switch (chartType) {
             case 'pie':
                 return (
@@ -80,7 +81,7 @@ const Visualization = () => {
 
             case 'area':
                 return (
-                    
+
                     <ResponsiveContainer width="100%" height={300}>
                         <AreaChart data={areaData}>
                             <XAxis dataKey="name" />
@@ -92,47 +93,59 @@ const Visualization = () => {
                         </AreaChart>
                     </ResponsiveContainer>
                 );
-                case 'savingsOverTime':
-                    return (
-                        <ResponsiveContainer width="100%" height={300}>
-                            <LineChart data={savingsOverTime}>
-                                <XAxis dataKey="month" />
-                                <YAxis />
-                                <Tooltip />
-                                <Legend />
-                                <Line type="monotone" dataKey="savings" stroke="#008000" dot={false} />
-                            </LineChart>
-                        </ResponsiveContainer>
-                    );
+            case 'savingsOverTime':
+                return (
+                    <ResponsiveContainer width="100%" height={300}>
+                        <LineChart data={savingsOverTime}>
+                            <XAxis dataKey="month" />
+                            <YAxis />
+                            <Tooltip />
+                            <Legend />
+                            <Line type="monotone" dataKey="savings" stroke="#008000" dot={false} />
+                        </LineChart>
+                    </ResponsiveContainer>
+                );
             default:
                 return null;
         }
     };
 
     return (
-        <div className="flex">
-            <div className="p-3">
-                <h2>Pie Chart</h2>
-                {renderChart('pie')}
-                <button onClick={() => setChartType('pie')}>Render Pie Chart</button>
+        <div className='p-4'>
+            <h1 className="text-3xl font-semibold">Personal Finance Tracker</h1>
+
+            <div className="flex">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
+                    <Cards title="Income" amount="2500" description="Your total income this month" />
+                    <Cards title="Expenses" amount="1200" description="Your total expenses this month" />
+                    <Cards title="Savings" amount="1300" description="Your total savings this month" />
+                </div>
             </div>
 
-            <div className="p-3">
-                <h2>Bar Chart</h2>
-                {renderChart('bar')}
-                <button onClick={() => setChartType('bar')}>Render Bar Chart</button>
-            </div>
+            <div>
+                <div className="p-3">
+                    <h2>Pie Chart</h2>
+                    {renderChart('pie')}
+                    <button onClick={() => setChartType('pie')}>Render Pie Chart</button>
+                </div>
 
-            <div className="p-3">
-                <h2>Line Chart</h2>
-                {renderChart('line')}
-                <button onClick={() => setChartType('line')}>Render Line Chart</button>
-            </div>
+                <div className="p-3">
+                    <h2>Bar Chart</h2>
+                    {renderChart('bar')}
+                    <button onClick={() => setChartType('bar')}>Render Bar Chart</button>
+                </div>
 
-            <div className="p-3">
-                <h2>Area Chart</h2>
-                {renderChart('area')}
-                <button onClick={() => setChartType('area')}>Render Area Chart</button>
+                <div className="p-3">
+                    <h2>Line Chart</h2>
+                    {renderChart('line')}
+                    <button onClick={() => setChartType('line')}>Render Line Chart</button>
+                </div>
+
+                <div className="p-3">
+                    <h2>Area Chart</h2>
+                    {renderChart('area')}
+                    <button onClick={() => setChartType('area')}>Render Area Chart</button>
+                </div>
             </div>
         </div>
     );

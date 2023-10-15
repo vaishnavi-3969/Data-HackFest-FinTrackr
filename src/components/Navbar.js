@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 import { FaUser, FaSignOutAlt, FaCaretDown } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
+import Logo from '../assets/Logo.jpeg';
 
 const Navbar = () => {
   const { user, isAuthenticated, logout } = useAuth0();
@@ -14,7 +15,7 @@ const Navbar = () => {
   return (
     <nav className="bg-white shadow-md p-4 text-blue-700">
       <div className="container mx-auto flex justify-between items-center">
-        <div className="text-2xl font-bold">FinTrackr</div>
+        <div className="text-2xl font-bold flex"><div className='max-w-[50px] px-1'><img src={Logo} alt=''/></div>FinTrackr</div>
         {isAuthenticated ? (
           <div className="relative">
             <div className="flex items-center cursor-pointer" onClick={toggleDropdown}>
@@ -39,9 +40,6 @@ const Navbar = () => {
                 </Link>
                 <Link to="transactions" className="nav-link block mb-2">
                   Transaction History
-                </Link>
-                <Link to="cards" className="nav-link block mb-2">
-                  Cards
                 </Link>
                 <Link to="documents" className="nav-link block mb-2">
                   Documents

@@ -159,7 +159,7 @@ function Homepage() {
             placeholder="Amount"
             value={newTransaction.amount}
             onChange={(e) => setNewTransaction({ ...newTransaction, amount: parseFloat(e.target.value) })}
-            className="px-3 py-2 rounded-md w-1/4 border border-gray-300"
+            className="px-3 text-black py-2 rounded-md w-1/4 border border-gray-300"
           />
           <select
             value={newTransaction.category}

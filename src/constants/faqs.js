@@ -17,7 +17,7 @@ export const faqs = [
   {
     id: 4,
     question: "Does the Personal Finance Tracker integrate with my bank accounts?",
-    answer: "Yes, our application integrates with banking services (e.g., Plaid) to securely link and retrieve your bank account information, transaction history, and balances."
+    answer: "Yes, our application integrates with banking services to securely link and retrieve your bank account information, transaction history, and balances."
   },
   {
     id: 5,
