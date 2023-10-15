@@ -32,13 +32,13 @@ const ViewProfile = () => {
     }, [db, user.email]);
 
     return (
-        <div className="p-8 bg-white rounded-lg shadow-lg">
+        <div className="p-8 bg-white rounded-lg shadow-lg text-black">
             {profileData ? (
                 <>
-                    <h2 className="text-2xl font-bold text-yellow-500 mb-4">User Profile</h2>
+                    <h2 className="text-2xl font-bold text-black-500 mb-4">User Profile</h2>
                     <div className="mb-4">
                         <img
-                            src={profileData.profileImage} 
+                            src={user.picture} 
                             alt="Profile Image"
                             className="w-32 h-32 rounded-full object-cover"
                         />
@@ -52,26 +52,35 @@ const ViewProfile = () => {
                     </div>
                     <div className="mb-4">
                         <h3 className="text-xl font-semibold">School/Professional Details</h3>
-                        {profileData.schoolDetails.map((school, index) => (
-                            <div key={index}>
-                                <p>School/University: {school.schoolName}</p>
-                                <p>Degree/Course: {school.degree}</p>
-                                <p>Graduation Year: {school.graduationYear}</p>
-                            </div>
-                        ))}
+                        {profileData.schoolDetails && profileData.schoolDetails.length > 0 ? (
+                            profileData.schoolDetails.map((school, index) => (
+                                <div key={index}>
+                                    <p>School/University: {school.schoolName}</p>
+                                    <p>Degree/Course: {school.degree}</p>
+                                    <p>Graduation Year: {school.graduationYear}</p>
+                                </div>
+                            ))
+                        ) : (
+                            <p>No school/professional details available.</p>
+                        )}
                     </div>
                     <div className="mb-4">
                         <h3 className="text-xl font-semibold">Shared Links</h3>
                         <p>LinkedIn: <a href={profileData.linkedin}>{profileData.linkedin}</a></p>
                         <p>GitHub: <a href={profileData.github}>{profileData.github}</a></p>
                         <p>Other Links:</p>
-                        <ul>
-                            {profileData.otherLinks.map((link, index) => (
-                                <li key={index}>
-                                    <a href={link}>{link}</a>
-                                </li>
-                            ))}
-                        </ul>
+                        {profileData.otherLinks && profileData.otherLinks.length > 0 ? (
+                            <ul>
+                                {profileData.otherLinks.map((link, index) => (
+                                    <li key={index}>
+                                        <a href={link}>{link}</a>
+                                    </li>
+                                ))
+                            }
+                            </ul>
+                        ) : (
+                            <p>No other links available.</p>
+                        )}
                     </div>
                 </>
             ) : (

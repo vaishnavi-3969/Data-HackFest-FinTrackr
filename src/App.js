@@ -7,6 +7,7 @@ import Homepage from './pages/HomePage';
 import Profile from './pages/Profile';
 import Navbar from './components/Navbar';
 import ViewProfile from './pages/ViewProfile';
+import Error from './pages/Error';
 
 function App() {
   const {isAuthenticated} = useAuth0();
@@ -19,6 +20,7 @@ function App() {
         <Route path="/" element={isAuthenticated ? <Homepage/> : <LandingPage/>} exact/>
         <Route path="/profile" element={<Profile/>} exact/>
         <Route path="/view_profile" element={<ViewProfile/>} exact/>
+        <Route path='*' element={<Error/>} exact/>
       </Routes>
      <Footer/>
     </BrowserRouter>
