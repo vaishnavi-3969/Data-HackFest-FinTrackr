@@ -32,29 +32,30 @@ const ViewProfile = () => {
     }, [db, user.email]);
 
     return (
-        <div className="p-8 bg-white rounded-lg shadow-lg text-black">
-            {profileData ? (
-                <>
-                    <h2 className="text-2xl font-bold text-black-500 mb-4">User Profile</h2>
-                    <div className="mb-4">
-                        <img
-                            src={user.picture} 
-                            alt="Profile Image"
-                            className="w-32 h-32 rounded-full object-cover"
-                        />
-                    </div>
-                    <div className="mb-4">
-                        <h3 className="text-xl font-semibold">Personal Details</h3>
+        <div className="p-8 bg-white shadow-lg text-black">
+           <div className='min-h-screen w-30 bg-gray-100 drop-shadow rounded-lg '>
+           {profileData ? (
+                <div className="text-center">
+                    <h2 className="text-2xl font-bold text-blue-700 mb-4">User Profile</h2>
+                    <img
+                        src={user.picture} 
+                        alt=""
+                        className="w-32 h-32 rounded-full object-cover mx-auto mb-4"
+                    />
+
+                    <div className="mt-6">
+                        <h3 className="text-xl text-blue-700 font-semibold">Personal Details</h3>
                         <p>Name: {`${profileData.firstName} ${profileData.lastName}`}</p>
                         <p>Email: {profileData.email}</p>
                         <p>Pronouns: {profileData.pronouns}</p>
                         <p>Short Bio: {profileData.bio}</p>
                     </div>
-                    <div className="mb-4">
-                        <h3 className="text-xl font-semibold">School/Professional Details</h3>
+
+                    <div className="mt-6">
+                        <h3 className="text-xl text-blue-700 font-semibold">School/Professional Details</h3>
                         {profileData.schoolDetails && profileData.schoolDetails.length > 0 ? (
                             profileData.schoolDetails.map((school, index) => (
-                                <div key={index}>
+                                <div key={index} className="mb-4">
                                     <p>School/University: {school.schoolName}</p>
                                     <p>Degree/Course: {school.degree}</p>
                                     <p>Graduation Year: {school.graduationYear}</p>
@@ -64,8 +65,9 @@ const ViewProfile = () => {
                             <p>No school/professional details available.</p>
                         )}
                     </div>
-                    <div className="mb-4">
-                        <h3 className="text-xl font-semibold">Shared Links</h3>
+
+                    <div className="mt-6">
+                        <h3 className="text-xl text-blue-700 font-semibold">Shared Links</h3>
                         <p>LinkedIn: <a href={profileData.linkedin}>{profileData.linkedin}</a></p>
                         <p>GitHub: <a href={profileData.github}>{profileData.github}</a></p>
                         <p>Other Links:</p>
@@ -82,10 +84,11 @@ const ViewProfile = () => {
                             <p>No other links available.</p>
                         )}
                     </div>
-                </>
+                </div>
             ) : (
                 <p>Loading profile data...</p>
             )}
+           </div>
         </div>
     );
 };
