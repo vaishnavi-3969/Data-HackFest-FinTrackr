@@ -8,10 +8,10 @@ import Profile from './pages/Profile';
 import Navbar from './components/Navbar';
 import ViewProfile from './pages/ViewProfile';
 import Error from './pages/Error';
-import Visualization from './pages/Visualization';
 import TransactionHistory from './pages/TransactionHistory';
 import Cards from './pages/Cards';
 import Documents from './pages/Documents';
+import Visualization from './pages/Visualization';
 
 function App() {
   const {isAuthenticated} = useAuth0();

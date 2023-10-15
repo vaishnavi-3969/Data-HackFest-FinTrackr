@@ -1,83 +1,94 @@
-import React from 'react';
-import { Pie, Bar, Line } from 'react-chartjs-2';
+import React, { useState } from 'react';
+import { PieChart, Pie, BarChart, Bar, LineChart, Line, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
 const Visualization = () => {
-    const pieChartData = {
-        labels: ['Grocery', 'Shopping', 'Food', 'Salary'],
-        datasets: [
-            {
-                data: [30, 20, 15, 35],
-                backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0'],
-            },
-        ],
-    };
+    const [chartType, setChartType] = useState('pie');
 
-    const barChartData = {
-        labels: ['January', 'February', 'March', 'April', 'May'],
-        datasets: [
-            {
-                label: 'Expenses',
-                data: [1500, 1200, 1300, 1400, 1600],
-                backgroundColor: '#36A2EB',
-            },
-            {
-                label: 'Income',
-                data: [2500, 2200, 2400, 2300, 2600],
-                backgroundColor: '#4BC0C0',
-            },
-        ],
-    };
+    const pieData = [
+        { name: 'Grocery', value: 30 },
+        { name: 'Shopping', value: 20 },
+        { name: 'Food', value: 15 },
+        { name: 'Salary', value: 35 },
+    ];
 
-    const lineChartData = {
-        labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
-        datasets: [
-            {
-                label: 'Savings',
-                data: [200, 350, 400, 600],
-                borderColor: '#FF6384',
-                fill: false,
-            },
-        ],
+    const barData = [
+        { name: 'January', expenses: 1500, income: 2500 },
+        { name: 'February', expenses: 1200, income: 2200 },
+        { name: 'March', expenses: 1300, income: 2400 },
+        { name: 'April', expenses: 1400, income: 2300 },
+        { name: 'May', expenses: 1600, income: 2600 },
+    ];
+
+    const lineData = [
+        { name: 'Week 1', savings: 200 },
+        { name: 'Week 2', savings: 350 },
+        { name: 'Week 3', savings: 400 },
+        { name: 'Week 4', savings: 600 },
+    ];
+
+    const renderChart = (chartType) => {
+        switch (chartType) {
+            case 'pie':
+                return (
+                    <ResponsiveContainer width="100%" height={300}>
+                        <PieChart>
+                            <Pie data={pieData} dataKey="value" nameKey="name" fill="#8884d8" label />
+                        </PieChart>
+                    </ResponsiveContainer>
+                );
+
+            case 'bar':
+                return (
+                    <ResponsiveContainer width="100%" height={300}>
+                        <BarChart data={barData}>
+                            <XAxis dataKey="name" />
+                            <YAxis />
+                            <Tooltip />
+                            <Legend />
+                            <Bar dataKey="expenses" fill="#36A2EB" />
+                            <Bar dataKey="income" fill="#4BC0C0" />
+                        </BarChart>
+                    </ResponsiveContainer>
+                );
+
+            case 'line':
+                return (
+                    <ResponsiveContainer width="100%" height={300}>
+                        <LineChart data={lineData}>
+                            <XAxis dataKey="name" />
+                            <YAxis />
+                            <Tooltip />
+                            <Legend />
+                            <Line type="monotone" dataKey="savings" stroke="#FF6384" dot={false} />
+                        </LineChart>
+                    </ResponsiveContainer>
+                );
+
+            default:
+                return null;
+        }
     };
 
     return (
-        <div>
+        <div className="flex">
+            <div className="p-3">
+                <h2>Pie Chart</h2>
+                {renderChart('pie')}
+                <button onClick={() => setChartType('pie')}>Render Pie Chart</button>
+            </div>
 
-            <Line
-                datasetIdKey='id'
-                data={{
-                    labels: ['Jun', 'Jul', 'Aug'],
-                    datasets: [
-                        {
-                            id: 1,
-                            label: '',
-                            data: [5, 6, 7],
-                        },
-                        {
-                            id: 2,
-                            label: '',
-                            data: [3, 2, 1],
-                        },
-                    ],
-                }}
-            />
+            <div className="p-3">
+                <h2>Bar Chart</h2>
+                {renderChart('bar')}
+                <button onClick={() => setChartType('bar')}>Render Bar Chart</button>
+            </div>
+
+            <div className="p-3">
+                <h2>Line Chart</h2>
+                {renderChart('line')}
+                <button onClick={() => setChartType('line')}>Render Line Chart</button>
+            </div>
         </div>
-        // <div className="flex">
-        //   <div className="p-3">
-        //     <h2>Pie Chart</h2>
-        //     <Pie data={pieChartData} />
-        //   </div>
-
-        //   <div className="p-3">
-        //     <h2>Bar Chart</h2>
-        //     <Bar data={barChartData} />
-        //   </div>
-
-        //   <div className="p-3">
-        //     <h2>Line Chart</h2>
-        //     <Line data={lineChartData} />
-        //   </div>
-        // </div>
     );
 };
 
