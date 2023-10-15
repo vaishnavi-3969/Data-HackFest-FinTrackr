@@ -8,7 +8,6 @@ const categoryIcons = {
   Salary: '💰',
   Food: '🍔',
   Shopping: '🛍️',
-  // Add more categories as needed
 };
 
 function Homepage() {
@@ -21,23 +20,19 @@ function Homepage() {
   const [bankName, setBankName] = useState('');
   const [paymentMethod, setPaymentMethod] = useState('');
   const [totalSpent, setTotalSpent] = useState(0);
-  const [remainingBalance, setRemainingBalance] = useState(2500); // Assuming an initial balance of $2500
+  const [remainingBalance, setRemainingBalance] = useState(2500);
 
   const { user } = useAuth0();
 
   useEffect(() => {
-    // Fetch transactions from Firebase based on user's email
+    // fetch transactions from Firebase based on user's email
     const fetchUserTransactions = async () => {
       const db = getDatabase();
-      const transactionsRef = ref(db, 'transactions'); // Replace with your Firebase reference
-      const userTransactionsQuery = query(
-        transactionsRef,
-        orderByChild('email'),
-        equalTo(user.email)
-      );
+      const sanitizedEmail = user.email.replace(/[^a-zA-Z0-9]/g, '_'); 
+      const userTransactionsRef = ref(db, `users/${sanitizedEmail}/transactions`);
 
       try {
-        const snapshot = await get(userTransactionsQuery);
+        const snapshot = await get(userTransactionsRef);
         if (snapshot.exists()) {
           const transactionsData = [];
           snapshot.forEach((childSnapshot) => {
@@ -56,27 +51,26 @@ function Homepage() {
   }, [user.email]);
 
   const handleAddTransaction = () => {
-    // Adding a new transaction
     const newTransactionData = {
       description: newTransaction.description,
       amount: parseFloat(newTransaction.amount),
       category: newTransaction.category,
-      email: user.email,
       timestamp: Date.now(),
     };
 
-    // Send the transaction data to Firebase
+    // send the transaction data to Firebase
     saveTransactionToFirebase(newTransactionData);
   };
 
   const saveTransactionToFirebase = (transaction) => {
     const db = getDatabase();
-    const transactionsRef = ref(db, 'transactions'); // Replace with your Firebase reference
+    const sanitizedEmail = user.email.replace(/[^a-zA-Z0-9]/g, '_'); // replace invalid characters
+    const transactionsRef = ref(db, `users/${sanitizedEmail}/transactions`);
 
     push(transactionsRef, transaction)
       .then(() => {
         console.log('Transaction data saved to Firebase:', transaction);
-        // Update the local state with the new transaction
+        // update the local state with the new transaction
         setTransactions([...transactions, transaction]);
         updateFinancialOverview([...transactions, transaction]);
         // Clear the input fields
@@ -90,7 +84,9 @@ function Homepage() {
   const handleDeleteTransaction = (timestamp) => {
     // Remove the transaction from Firebase and update the local state
     const db = getDatabase();
-    const transactionRef = ref(db, `transactions/${timestamp}`);
+    const sanitizedEmail = user.email.replace(/[^a-zA-Z0-9]/g, '_');
+    const transactionRef = ref(db, `users/${sanitizedEmail}/transactions/${timestamp}`);
+
     remove(transactionRef)
       .then(() => {
         const updatedTransactions = transactions.filter((transaction) => transaction.timestamp !== timestamp);
@@ -132,7 +128,7 @@ function Homepage() {
         <ul className="text-white">
           {transactions.map((transaction) => (
             <li key={transaction.timestamp}>
-              <div className="flex justify-between">
+              <div className="flex justify between">
                 <span>
                   {categoryIcons[transaction.category]} {transaction.description}
                 </span>
@@ -168,16 +164,17 @@ function Homepage() {
           <select
             value={newTransaction.category}
             onChange={(e) => setNewTransaction({ ...newTransaction, category: e.target.value })}
-            className="p-2 mr-2 rounded-md"
+            className="p-2 mr-2 rounded-md text-black"
           >
             <option value="">Select Category</option>
             <option value="Groceries">Groceries</option>
             <option value="Salary">Salary</option>
             <option value="Food">Food</option>
             <option value="Shopping">Shopping</option>
-            {/* Add more categories as needed */}
           </select>
-          <button onClick={handleAddTransaction} className="p-2 bg-blue-500 text-white rounded-md flex"><FaPlusCircle /> Add</button>
+          <button onClick={handleAddTransaction} className="p-2 bg-blue-500 text-white rounded-md flex">
+            <FaPlusCircle /> Add
+          </button>
         </div>
       </div>
     </div>
