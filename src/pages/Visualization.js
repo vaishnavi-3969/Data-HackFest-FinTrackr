@@ -6,10 +6,10 @@ const Visualization = () => {
     const [chartType, setChartType] = useState('pie');
 
     const pieData = [
-        { name: 'Grocery', value: 30 },
-        { name: 'Shopping', value: 20 },
-        { name: 'Food', value: 15 },
-        { name: 'Salary', value: 35 },
+        { name: 'Grocery', value: 300 },
+        { name: 'Shopping', value: 200 },
+        { name: 'Food', value: 150 },
+        { name: 'Salary', value: 350 },
     ];
 
     const barData = [
