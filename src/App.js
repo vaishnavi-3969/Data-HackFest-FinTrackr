@@ -11,6 +11,7 @@ import Error from './pages/Error';
 import TransactionHistory from './pages/TransactionHistory';
 import Documents from './pages/Documents';
 import Visualization from './pages/Visualization';
+import Contact from './pages/Contact';
 
 function App() {
   const { isAuthenticated } = useAuth0();
@@ -27,6 +28,7 @@ function App() {
           <Route path="/visualizations" element={<Visualization />} exact />
           <Route path='/transactions' element={<TransactionHistory />} exact />
           <Route path='/documents' element={<Documents />} exact />
+          <Route path="/contact" element={<Contact />} exact />
         </Routes>
         <Footer />
       </BrowserRouter>
