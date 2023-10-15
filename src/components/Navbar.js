@@ -44,6 +44,9 @@ const Navbar = () => {
                 <Link to="documents" className="nav-link block mb-2">
                   Documents
                 </Link>
+                <Link to="contact" className="nav-link block mb-2">
+                  Contact
+                </Link>
                 <button
                   className="p-2 bg-red-500 text-white rounded-md w-full text-center hover:bg-red-600"
                   onClick={() => logout({ returnTo: window.location.origin })}
