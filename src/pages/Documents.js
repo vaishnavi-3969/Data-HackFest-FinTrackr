@@ -4,18 +4,15 @@ import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { collection, addDoc, getDocs, deleteDoc, doc, getFirestore } from 'firebase/firestore';
 import app from '../db/Firebase';
 import { getDatabase } from 'firebase/database';
+import { FaFile, FaTrash, FaUpload } from 'react-icons/fa';
 
 const Documents = () => {
   const { user } = useAuth0();
   const [documents, setDocuments] = useState([]);
   const [selectedFile, setSelectedFile] = useState(null);
-
-  // const storage = getStorage(app);
-  // const db = app.firestore();
   const db = getFirestore(app);
   const storage = getStorage(app);
 
-  // const database = getDatabase(app);
   useEffect(() => {
     const fetchDocuments = async () => {
       if (user) {
@@ -84,14 +81,18 @@ const Documents = () => {
     <div>
       <h2>Documents</h2>
       <input type="file" onChange={handleFileSelect} />
-      <button onClick={handleFileUpload}>Upload Document</button>
+      <button onClick={handleFileUpload} className="upload-button">
+        <FaUpload /> Upload Document
+      </button>
       <div className="documents-container">
         {documents.map((document) => (
           <div className="document" key={document.id}>
             <a href={document.url} target="_blank" rel="noopener noreferrer">
-              {document.name}
+              <FaFile /> {document.name}
             </a>
-            <button onClick={() => handleDeleteDocument(document.id)}>Delete</button>
+            <button onClick={() => handleDeleteDocument(document.id)} className="delete-button">
+              <FaTrash />
+            </button>
           </div>
         ))}
       </div>
