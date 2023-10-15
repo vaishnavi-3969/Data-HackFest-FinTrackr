@@ -1,55 +1,112 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import { getDatabase, ref, push, remove, get, query, orderByChild, equalTo } from 'firebase/database';
 import { useAuth0 } from '@auth0/auth0-react';
-import { FaUser, FaMoneyBill, FaCreditCard, FaPlusCircle } from 'react-icons/fa';
+import { FaUser, FaMoneyBill, FaCreditCard, FaPlusCircle, FaTrash } from 'react-icons/fa';
 
+const categoryIcons = {
+  Groceries: '🛒',
+  Salary: '💰',
+  Food: '🍔',
+  Shopping: '🛍️',
+  // Add more categories as needed
+};
 
 function Homepage() {
   const [transactions, setTransactions] = useState([]);
   const [newTransaction, setNewTransaction] = useState({
     description: '',
     amount: 0,
+    category: '',
   });
   const [bankName, setBankName] = useState('');
   const [paymentMethod, setPaymentMethod] = useState('');
   const [totalSpent, setTotalSpent] = useState(0);
-  const [remainingBalance, setRemainingBalance] = useState(0);
+  const [remainingBalance, setRemainingBalance] = useState(2500); // Assuming an initial balance of $2500
 
   const { user } = useAuth0();
 
-  const fakeTransactions = [
-    { id: 1, description: 'Groceries', amount: -50.00 },
-    { id: 2, description: 'Paycheck', amount: 2500.00 },
-    { id: 3, description: 'Dining out', amount: -30.00 },
-    { id: 4, description: 'Online Shopping', amount: -100.00 },
-    { id: 5, description: 'Clothes', amount: -75.00 },
-  ];
-
   useEffect(() => {
-    setTransactions(fakeTransactions);
+    // Fetch transactions from Firebase based on user's email
+    const fetchUserTransactions = async () => {
+      const db = getDatabase();
+      const transactionsRef = ref(db, 'transactions'); // Replace with your Firebase reference
+      const userTransactionsQuery = query(
+        transactionsRef,
+        orderByChild('email'),
+        equalTo(user.email)
+      );
 
-    //  total spent and remaining balance
-    const spent = fakeTransactions.reduce((total, transaction) => total + transaction.amount, 0);
-    setTotalSpent(spent);
-    setRemainingBalance(2500 - spent); // Assuming an initial balance of $2500
-  }, []);
-
-  const handleAddTransaction = () => {
-    // adding a new transaction
-    const newTransactionData = {
-      id: transactions.length + 1,
-      description: newTransaction.description,
-      amount: parseFloat(newTransaction.amount),
+      try {
+        const snapshot = await get(userTransactionsQuery);
+        if (snapshot.exists()) {
+          const transactionsData = [];
+          snapshot.forEach((childSnapshot) => {
+            const transaction = childSnapshot.val();
+            transactionsData.push(transaction);
+          });
+          setTransactions(transactionsData);
+          updateFinancialOverview(transactionsData);
+        }
+      } catch (error) {
+        console.error('Error fetching user transactions:', error);
+      }
     };
 
-    setTransactions([...transactions, newTransactionData]);
+    fetchUserTransactions();
+  }, [user.email]);
 
-    // update the total spent and remaining balance
-    setTotalSpent(totalSpent + newTransactionData.amount);
-    setRemainingBalance(2500 - (totalSpent + newTransactionData.amount));
+  const handleAddTransaction = () => {
+    // Adding a new transaction
+    const newTransactionData = {
+      description: newTransaction.description,
+      amount: parseFloat(newTransaction.amount),
+      category: newTransaction.category,
+      email: user.email,
+      timestamp: Date.now(),
+    };
 
-    // clear the input fields
-    setNewTransaction({ description: '', amount: 0 });
+    // Send the transaction data to Firebase
+    saveTransactionToFirebase(newTransactionData);
+  };
+
+  const saveTransactionToFirebase = (transaction) => {
+    const db = getDatabase();
+    const transactionsRef = ref(db, 'transactions'); // Replace with your Firebase reference
+
+    push(transactionsRef, transaction)
+      .then(() => {
+        console.log('Transaction data saved to Firebase:', transaction);
+        // Update the local state with the new transaction
+        setTransactions([...transactions, transaction]);
+        updateFinancialOverview([...transactions, transaction]);
+        // Clear the input fields
+        setNewTransaction({ description: '', amount: 0, category: '' });
+      })
+      .catch((error) => {
+        console.error('Error saving transaction data to Firebase:', error);
+      });
+  };
+
+  const handleDeleteTransaction = (timestamp) => {
+    // Remove the transaction from Firebase and update the local state
+    const db = getDatabase();
+    const transactionRef = ref(db, `transactions/${timestamp}`);
+    remove(transactionRef)
+      .then(() => {
+        const updatedTransactions = transactions.filter((transaction) => transaction.timestamp !== timestamp);
+        setTransactions(updatedTransactions);
+        updateFinancialOverview(updatedTransactions);
+      })
+      .catch((error) => {
+        console.error('Error deleting transaction:', error);
+      });
+  };
+
+  const updateFinancialOverview = (updatedTransactions) => {
+    // Update the total spent and remaining balance based on the updated transactions
+    const spent = updatedTransactions.reduce((total, transaction) => total + transaction.amount, 0);
+    setTotalSpent(spent);
+    setRemainingBalance(2500 - spent);
   };
 
   return (
@@ -74,12 +131,17 @@ function Homepage() {
         <h2 className="text-2xl text-white mb-2">Recent Transactions</h2>
         <ul className="text-white">
           {transactions.map((transaction) => (
-            <li key={transaction.id}>
+            <li key={transaction.timestamp}>
               <div className="flex justify-between">
-                <span>{transaction.description}</span>
+                <span>
+                  {categoryIcons[transaction.category]} {transaction.description}
+                </span>
                 <span className={transaction.amount < 0 ? 'text-red-500' : 'text-green-500'}>
                   {transaction.amount < 0 ? '-$' : '+$'}
                   {Math.abs(transaction.amount).toFixed(2)}
+                  <button onClick={() => handleDeleteTransaction(transaction.timestamp)} className="text-red-500">
+                    <FaTrash />
+                  </button>
                 </span>
               </div>
             </li>
@@ -103,6 +165,18 @@ function Homepage() {
             onChange={(e) => setNewTransaction({ ...newTransaction, amount: parseFloat(e.target.value) })}
             className="p-2 mr-2 rounded-md"
           />
+          <select
+            value={newTransaction.category}
+            onChange={(e) => setNewTransaction({ ...newTransaction, category: e.target.value })}
+            className="p-2 mr-2 rounded-md"
+          >
+            <option value="">Select Category</option>
+            <option value="Groceries">Groceries</option>
+            <option value="Salary">Salary</option>
+            <option value="Food">Food</option>
+            <option value="Shopping">Shopping</option>
+            {/* Add more categories as needed */}
+          </select>
           <button onClick={handleAddTransaction} className="p-2 bg-blue-500 text-white rounded-md flex"><FaPlusCircle /> Add</button>
         </div>
       </div>
