@@ -1,20 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
-import app from '../db/Firebase'; 
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-import { collection, addDoc, getDocs, deleteDoc, doc } from 'firebase/firestore';
+import { collection, addDoc, getDocs, deleteDoc, doc, getFirestore } from 'firebase/firestore';
+import app from '../db/Firebase';
+import { getDatabase } from 'firebase/database';
 
 const Documents = () => {
   const { user } = useAuth0();
   const [documents, setDocuments] = useState([]);
   const [selectedFile, setSelectedFile] = useState(null);
 
+  // const storage = getStorage(app);
+  // const db = app.firestore();
+  const db = getFirestore(app);
   const storage = getStorage(app);
 
+  // const database = getDatabase(app);
   useEffect(() => {
     const fetchDocuments = async () => {
       if (user) {
-        const documentsRef = collection(app.firestore(), `users/${user.sub}/documents`);
+        const documentsRef = collection(db, `users/${user.sub}/documents`);
         const querySnapshot = await getDocs(documentsRef);
         const docs = [];
 
@@ -27,7 +32,7 @@ const Documents = () => {
     };
 
     fetchDocuments();
-  }, [user]);
+  }, [user, db]);
 
   const handleFileUpload = async () => {
     if (user && selectedFile) {
@@ -35,17 +40,14 @@ const Documents = () => {
       await uploadBytes(storageRef, selectedFile);
       const downloadURL = await getDownloadURL(storageRef);
 
-      const documentsRef = collection(app.firestore(), `users/${user.sub}/documents`);
+      const documentsRef = collection(db, `users/${user.sub}/documents`);
       const newDocument = {
         name: selectedFile.name,
         url: downloadURL,
         timestamp: new Date(),
       };
 
-      // Add the new document to the Firestore collection
       const docRef = await addDoc(documentsRef, newDocument);
-
-      // Update the documents state to include the new document
       setDocuments([...documents, { id: docRef.id, ...newDocument }]);
     }
   };
@@ -56,7 +58,7 @@ const Documents = () => {
 
   const handleDeleteDocument = async (documentId) => {
     if (user) {
-      const documentsRef = collection(app.firestore(), `users/${user.sub}/documents`);
+      const documentsRef = collection(db, `users/${user.sub}/documents`);
       const documentRef = doc(documentsRef, documentId);
 
       try {
