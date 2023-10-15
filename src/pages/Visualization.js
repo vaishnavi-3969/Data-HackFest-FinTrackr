@@ -40,6 +40,7 @@ const Visualization = () => {
     ];
 
     const renderChart = (chartType) => {
+        
         switch (chartType) {
             case 'pie':
                 return (
@@ -79,6 +80,7 @@ const Visualization = () => {
 
             case 'area':
                 return (
+                    
                     <ResponsiveContainer width="100%" height={300}>
                         <AreaChart data={areaData}>
                             <XAxis dataKey="name" />
