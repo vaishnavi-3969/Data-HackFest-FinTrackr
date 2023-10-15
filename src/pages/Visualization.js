@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { PieChart, Pie, BarChart, Bar, LineChart, Line, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { PieChart, Pie, BarChart, Bar, LineChart, Line, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer, AreaChart, Area } from 'recharts';
 
 const Visualization = () => {
     const [chartType, setChartType] = useState('pie');
@@ -24,6 +24,19 @@ const Visualization = () => {
         { name: 'Week 2', savings: 350 },
         { name: 'Week 3', savings: 400 },
         { name: 'Week 4', savings: 600 },
+    ];
+
+    const areaData = [
+        { name: 'January', expenses: 1500, income: 2500 },
+        { name: 'February', expenses: 1200, income: 2200 },
+        { name: 'March', expenses: 1300, income: 2400 },
+        { name: 'April', expenses: 1400, income: 2300 },
+        { name: 'May', expenses: 1600, income: 2600 },
+    ];
+    const savingsOverTime = [
+        { month: 'Jan', savings: 1000 },
+        { month: 'Feb', savings: 1200 },
+        { month: 'Mar', savings: 1500 },
     ];
 
     const renderChart = (chartType) => {
@@ -64,6 +77,31 @@ const Visualization = () => {
                     </ResponsiveContainer>
                 );
 
+            case 'area':
+                return (
+                    <ResponsiveContainer width="100%" height={300}>
+                        <AreaChart data={areaData}>
+                            <XAxis dataKey="name" />
+                            <YAxis />
+                            <Tooltip />
+                            <Legend />
+                            <Area dataKey="expenses" stackId="1" fill="#36A2EB" />
+                            <Area dataKey="income" stackId="1" fill="#4BC0C0" />
+                        </AreaChart>
+                    </ResponsiveContainer>
+                );
+                case 'savingsOverTime':
+                    return (
+                        <ResponsiveContainer width="100%" height={300}>
+                            <LineChart data={savingsOverTime}>
+                                <XAxis dataKey="month" />
+                                <YAxis />
+                                <Tooltip />
+                                <Legend />
+                                <Line type="monotone" dataKey="savings" stroke="#008000" dot={false} />
+                            </LineChart>
+                        </ResponsiveContainer>
+                    );
             default:
                 return null;
         }
@@ -87,6 +125,12 @@ const Visualization = () => {
                 <h2>Line Chart</h2>
                 {renderChart('line')}
                 <button onClick={() => setChartType('line')}>Render Line Chart</button>
+            </div>
+
+            <div className="p-3">
+                <h2>Area Chart</h2>
+                {renderChart('area')}
+                <button onClick={() => setChartType('area')}>Render Area Chart</button>
             </div>
         </div>
     );
