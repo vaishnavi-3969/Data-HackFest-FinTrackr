@@ -3,7 +3,6 @@ import { useAuth0 } from '@auth0/auth0-react';
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { collection, addDoc, getDocs, deleteDoc, doc, getFirestore } from 'firebase/firestore';
 import app from '../db/Firebase';
-import { getDatabase } from 'firebase/database';
 import { FaFile, FaTrash, FaUpload } from 'react-icons/fa';
 
 const Documents = () => {
@@ -78,19 +77,19 @@ const Documents = () => {
   };
 
   return (
-    <div>
-      <h2>Documents</h2>
-      <input type="file" onChange={handleFileSelect} />
-      <button onClick={handleFileUpload} className="upload-button">
-        <FaUpload /> Upload Document
+    <div className="bg-gray-100 p-6 rounded-lg shadow-md">
+      <h2 className="text-2xl mb-4">Your Documents</h2>
+      <input type="file" onChange={handleFileSelect} className="mb-4" />
+      <button onClick={handleFileUpload} className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700">
+        <FaUpload className="mr-2" /> Upload Document
       </button>
-      <div className="documents-container">
+      <div className="mt-4">
         {documents.map((document) => (
-          <div className="document" key={document.id}>
-            <a href={document.url} target="_blank" rel="noopener noreferrer">
-              <FaFile /> {document.name}
+          <div key={document.id} className="flex items-center justify-between p-3 bg-white shadow-md rounded-lg mb-2">
+            <a href={document.url} target="_blank" rel="noopener noreferrer" className="text-blue-500">
+              <FaFile className="mr-2" /> {document.name}
             </a>
-            <button onClick={() => handleDeleteDocument(document.id)} className="delete-button">
+            <button onClick={() => handleDeleteDocument(document.id)} className="text-red-500">
               <FaTrash />
             </button>
           </div>
