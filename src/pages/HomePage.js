@@ -8,7 +8,6 @@ const categoryIcons = {
   Salary: '💰',
   Food: '🍔',
   Shopping: '🛍️',
-  // Add more categories as needed
 };
 
 function Homepage() {
