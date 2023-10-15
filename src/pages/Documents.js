@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-import { collection, addDoc, getDocs, deleteDoc, doc, getFirestore } from 'firebase/firestore';
+import { collection, addDoc, getDocs, deleteDoc, doc, getFirestore, getDoc } from 'firebase/firestore'; // Import getDoc function
 import app from '../db/Firebase';
 import { FaFile, FaTrash, FaUpload } from 'react-icons/fa';
 
@@ -53,18 +53,23 @@ const Documents = () => {
   };
 
   const handleDeleteDocument = async (documentId) => {
+    if (!documentId) {
+      console.error('Invalid documentId:', documentId);
+      return;
+    }
+  
     if (user) {
       const documentsRef = collection(db, `users/${user.sub}/documents`);
       const documentRef = doc(documentsRef, documentId);
-
+  
       try {
-        const documentData = (await documentRef.get()).data();
-
+        const documentData = (await getDoc(documentRef)).data();
+  
         if (documentData) {
           const storageRef = ref(storage, documentData.url);
           await deleteDoc(documentRef);
           await deleteDoc(storageRef);
-
+  
           // Update the documents state by removing the deleted document
           setDocuments(documents.filter((doc) => doc.id !== documentId));
         } else {
@@ -75,12 +80,13 @@ const Documents = () => {
       }
     }
   };
+  
 
   return (
     <div className="bg-gray-100 p-6 rounded-lg shadow-md">
       <h2 className="text-2xl mb-4">Your Documents</h2>
       <input type="file" onChange={handleFileSelect} className="mb-4" />
-      <button onClick={handleFileUpload} className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700">
+      <button onClick={handleFileUpload} className="bg-blue-500 text-white px-4 py-2 rounded hover-bg-blue-700">
         <FaUpload className="mr-2" /> Upload Document
       </button>
       <div className="mt-4">
