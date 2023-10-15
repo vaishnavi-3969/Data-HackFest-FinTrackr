@@ -84,7 +84,7 @@ const Documents = () => {
 
   return (
     <div className="bg-gray-100 p-6 rounded-lg shadow-md">
-      <h2 className="text-2xl mb-4">Your Documents</h2>
+      <h2 className="text-2xl mb-4">Your Personal Vault for Storing Documents</h2>
       <input type="file" onChange={handleFileSelect} className="mb-4" />
       <button onClick={handleFileUpload} className="bg-blue-500 text-white px-4 py-2 rounded hover-bg-blue-700">
         <FaUpload className="mr-2" /> Upload Document
