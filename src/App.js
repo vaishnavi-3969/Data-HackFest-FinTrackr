@@ -12,6 +12,7 @@ import TransactionHistory from './pages/TransactionHistory';
 import Cards from './pages/Cards';
 import Documents from './pages/Documents';
 import Visualization from './pages/Visualization';
+import Contact from './pages/Contact';
 
 function App() {
   const {isAuthenticated} = useAuth0();
@@ -29,6 +30,7 @@ function App() {
         <Route path='/transactions' element={<TransactionHistory/>} exact/>
         <Route path='/cards' element={<Cards/>} exact/>
         <Route path='/documents' element={<Documents/>} exact/>
+        <Route path="/contact" element={<Contact />} exact />
       </Routes>
      <Footer/>
     </BrowserRouter>
